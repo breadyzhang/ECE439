@@ -16,20 +16,28 @@ current_index = 1;
 %% PACKET DETECTION
 
 %  ... add your code here ... %
-
+start = packet_detection(rx_signal);
+rx_signal = rx_signal(start,start+num_samples*num_bins);
 %% CFO ESTIMATION AND CORRECTION
 
 %  ... add your code here ... %
-
+current_index = current_index + num_bins*4;
+sym1 = rx_signal(1,current_index:current_index+num_bins-1);
+sym2 = rx_signal(1,current_index+num_bins:current_index+num_bins*2-1);
+cfo = estimate_cfo(sym1,sym2,fs);
+rx_signal = correct_cfo(rx_signal,cfo,fs);
 %% CHANNEL ESTIMATION
 
 %  ... add your code here ... %
-
+current_index = current_index + num_bins*2;
+sym1 = rx_signal(1,current_index:current_index+num_bins-1);
+sym2 = rx_signal(1,current_index+num_bins:current_index+num_bins*2-1);
+H = estimate_channel(sym1,sym2);
+rx_signal = correct_channel(rx_signal,H);
 %% DECODING
 for m = 1:1:num_syms_data
 
 %  ... add your code here ... %
-
 end
     
 end

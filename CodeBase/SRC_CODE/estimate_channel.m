@@ -19,9 +19,10 @@ for m=1:1:size(bits_preamble,2)
     end
 end
 for m=1:1:num_bins
-    fftbin = convert_bin_index_fft_to_normal(m, num_bins);
-    if sum(gaurd_bins == fftbin) == 0
-        H(m) = abs((rx_sym1(m)+rx_sym2(m))/(2*preamble(m)));
+%     fftbin = convert_bin_index_fft_to_normal(m, num_bins);
+%     if sum(gaurd_bins == fftbin) == 0
+    if preamble(m) ~= 0
+        H(m) = (rx_sym1(m)+rx_sym2(m))/(2*preamble(m));
     end
 end
 end
